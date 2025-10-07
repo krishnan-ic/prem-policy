@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mule API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { padding: 8px; margin: 5px; }
+        #response { margin-top: 20px; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h2>Call Mule API</h2>
+
+    <!-- Input field -->
+    <input type="text" id="inputData" placeholder="Enter data to send" />
+
+    <!-- Submit button -->
+    <button onclick="callApi()">Submit</button>
+
+    <!-- Response display -->
+    <div id="response"></div>
+
+    <script>
+        function callApi() {
+            // Replace this with your actual Mule API URL
+            const apiUrl = "https://custom-api-5pi66w.5sc6y6-2.usa-e2.cloudhub.io/api/policy";
+            
+            // Get value from input field
+            const inputValue = document.getElementById("inputData").value;
+
+            // Append input as query parameter (GET request cannot have a body)
+            const urlWithParams = apiUrl + "?input=" + encodeURIComponent(inputValue);
+
+            fetch(urlWithParams)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok: " + response.status);
+                    }
+                    return response.text(); // or response.json() if your API returns JSON
+                })
+                .then(data => {
+                    document.getElementById("response").textContent = data;
+                })
+                .catch(error => {
+                    document.getElementById("response").textContent = "Error: " + error;
+                });
+        }
+    </script>
+</body>
+</html>
